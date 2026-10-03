@@ -1260,7 +1260,16 @@
 
 <a href="#/cart" class="cart-fab" id="cartFab"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h8.8a1 1 0 0 0 1-.8L20 7H6"/></svg><span>سبد خرید (<span id="cartCount">0</span>)</span></a>
 <div class="ord-ov" id="ordOv" style="display:none;">
-  <div class="ord-card">
+  <div class="ord-card" id="ordStep2" style="display:none;">
+    <h3>پیام سفارش در واتساپ ارسال شد؟</h3>
+    <p class="ord-note">اگر واتساپ باز نشد، دوباره تلاش کنید یا متن سفارش را کپی کنید و خودتان در واتساپ ارسال کنید. تا وقتی پیام ارسال نشود، سفارش به دست ما نمی‌رسد.</p>
+    <div class="ord-code" id="ordCode2"></div>
+    <button class="btn-secondary" id="ordRetry" style="width:100%;">باز کردن دوباره‌ی واتساپ</button>
+    <button class="btn-secondary" id="ordCopyText" style="width:100%; margin-top:8px;">کپی متن سفارش</button>
+    <button class="btn-primary" id="ordDone" style="width:100%; margin-top:8px;">پیام را ارسال کردم</button>
+    <button class="btn-secondary" id="ordBack2" style="width:100%; margin-top:8px;">بازگشت به سبد</button>
+  </div>
+  <div class="ord-card" id="ordStep1">
     <h3>سفارش شما آماده‌ی ارسال است</h3>
     <div class="ord-lbl">کد پیگیری سفارش شما</div>
     <div class="ord-code" id="ordCode"></div>
@@ -1912,15 +1921,55 @@
     } catch(e){}
   })();
   updateReq();
-  var pendingOrderUrl = '';
-  function openOverlay(code, url){
-    pendingOrderUrl = url;
+  var pendingOrderUrl = '', pendingOrderText = '';
+  // Open a link outside the app (WhatsApp). Inside the Median app, window.open gives a blank page, so use its bridge.
+  function openExternal(url){
+    try {
+      if (window.median && window.median.window && typeof window.median.window.open === 'function'){ window.median.window.open(url, 'external'); return; }
+      if (window.gonative && window.gonative.open && typeof window.gonative.open.externalBrowser === 'function'){ window.gonative.open.externalBrowser({ url:url }); return; }
+    } catch(e){}
+    var ua = navigator.userAgent || '';
+    var inApp = /median|gonative/i.test(ua) || !!window.median || !!window.gonative;
+    if (inApp){
+      // window.open gives a blank page inside the app: use the WhatsApp link scheme (Android) or a normal navigation.
+      var m = String(url).match(/^https:\/\/wa\.me\/(\d+)\?text=(.*)$/);
+      if (m && /Android/i.test(ua)){
+        try {
+          var a = document.createElement('a');
+          a.href = 'whatsapp://send?phone=' + m[1] + '&text=' + m[2];
+          a.style.display = 'none'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          return;
+        } catch(e){}
+      }
+      location.href = url; return;
+    }
+    var w = null;
+    try { w = window.open(url, '_blank'); } catch(e){}
+    if (!w) location.href = url;
+  }
+  function copyOrderText(txt){
+    function fb(){
+      var ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta); return ok;
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).catch(fb); return true; }
+    } catch(e){}
+    return fb();
+  }
+  function openOverlay(code, url, text){
+    pendingOrderUrl = url; pendingOrderText = text || '';
     document.getElementById('ordCode').textContent = code;
+    document.getElementById('ordCode2').textContent = code;
+    document.getElementById('ordStep1').style.display = 'block';
+    document.getElementById('ordStep2').style.display = 'none';
     document.getElementById('ordOv').style.display = 'flex';
   }
-  document.getElementById('ordBack').addEventListener('click', function(){
-    document.getElementById('ordOv').style.display = 'none';
-  });
+  function closeOverlay(){ document.getElementById('ordOv').style.display = 'none'; }
+  document.getElementById('ordBack').addEventListener('click', closeOverlay);
+  document.getElementById('ordBack2').addEventListener('click', closeOverlay);
   document.getElementById('ordCopy').addEventListener('click', function(){
     var code = document.getElementById('ordCode').textContent;
     try {
@@ -1928,10 +1977,19 @@
     } catch(e){ toast('کد رو به‌صورت دستی یادداشت کن'); }
   });
   document.getElementById('ordSend').addEventListener('click', function(){
-    window.open(pendingOrderUrl, '_blank');
-    document.getElementById('ordOv').style.display = 'none';
+    copyOrderText(pendingOrderText);
+    document.getElementById('ordStep1').style.display = 'none';
+    document.getElementById('ordStep2').style.display = 'block';
+    openExternal(pendingOrderUrl);
+  });
+  document.getElementById('ordRetry').addEventListener('click', function(){ openExternal(pendingOrderUrl); });
+  document.getElementById('ordCopyText').addEventListener('click', function(){
+    toast(copyOrderText(pendingOrderText) ? 'متن سفارش کپی شد' : 'کپی نشد؛ دوباره تلاش کنید');
+  });
+  document.getElementById('ordDone').addEventListener('click', function(){
+    closeOverlay();
     cart = []; saveCart(cart); updateCartFab();
-    toast('در حال انتقال به واتساپ...');
+    toast('سفارش شما ثبت شد؛ از انتخاب‌تان سپاسگزاریم');
     location.hash = '#/';
   });
   document.getElementById('cartCheckout').addEventListener('click', function(){
@@ -1981,7 +2039,7 @@
     if (notes) lines.push('توضیحات: ' + notes);
     try { localStorage.setItem(LS_CUSTOMER, JSON.stringify({ name:name, phone:phone, postal:postal, addr:addr })); } catch(e){}
     var url = 'https://wa.me/' + settings.wa.replace(/\D/g,'') + '?text=' + encodeURIComponent(lines.join('\n'));
-    openOverlay(code, url);
+    openOverlay(code, url, lines.join('\n'));
   });
 
   // ---- Admin sheet (hidden route: #/admin, PIN protected) ----
@@ -2975,7 +3033,7 @@
   });
   chatBox.addEventListener('click', function(e){
     var b = e.target.closest('button[data-wa]');
-    if (b) window.open(waUrl(decodeURIComponent(b.getAttribute('data-wa'))), '_blank');
+    if (b) openExternal(waUrl(decodeURIComponent(b.getAttribute('data-wa'))));
   });
 
   // ---- Footer accordions ----
@@ -3040,9 +3098,10 @@
     document.getElementById('infoBody').innerHTML = pg.html;
     if (key === 'track' && settings.wa){
       var a = document.createElement('a');
-      a.className = 'info-btn'; a.target = '_blank';
+      a.className = 'info-btn';
       a.href = 'https://wa.me/' + String(settings.wa).replace(/\D/g, '') + '?text=' + encodeURIComponent('سلام، می‌خوام سفارشم رو پیگیری کنم. کد پیگیری: ');
       a.textContent = 'ارسال کد پیگیری در واتساپ';
+      a.addEventListener('click', function(e){ e.preventDefault(); openExternal(a.href); });
       document.getElementById('trackBtnBox').appendChild(a);
     }
   }
