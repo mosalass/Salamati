@@ -1530,9 +1530,12 @@
   function saveProducts(list){
     try { localStorage.setItem(LS_PRODUCTS, JSON.stringify(list)); } catch(e){ toast('حافظه مرورگر پره، یه محصول قدیمی رو حذف کن'); }
   }
+  var DEFAULT_WA = '989377778982';   // pharmacy WhatsApp number (country code, no leading zero); the admin panel can override it on a device
   function loadSettings(){
-    try { var raw = localStorage.getItem(LS_SETTINGS); return raw ? JSON.parse(raw) : {wa:''}; }
-    catch(e){ return {wa:''}; }
+    var st = { wa:'' };
+    try { var raw = localStorage.getItem(LS_SETTINGS); if (raw) st = JSON.parse(raw) || { wa:'' }; } catch(e){}
+    if (!st.wa || !String(st.wa).replace(/\D/g, '')) st.wa = DEFAULT_WA;
+    return st;
   }
   function saveSettings(s){ try { localStorage.setItem(LS_SETTINGS, JSON.stringify(s)); return true; } catch(e){ return false; } }
   function loadCart(){
@@ -3153,6 +3156,7 @@
     document.body.classList.toggle('route-chat', route === 'chat');
     if (route === 'chat') renderChat();
     closeTool(); setNav(route);
+    if (route !== 'cart'){ var ov = document.getElementById('ordOv'); if (ov) ov.style.display = 'none'; }
     if (!keep) window.scrollTo(0, 0);
   }
   window.addEventListener('hashchange', function(){ showView(location.hash); });
