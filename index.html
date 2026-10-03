@@ -3,6 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* Android app (Median): the status bar can overlay the page while env() reports 0, so top content gets hidden. Add a fallback top inset there only. */
+(function(){
+  function apply(){
+    try {
+      var ua = navigator.userAgent || '';
+      if (!/Android/i.test(ua)) return;
+      if (!(/median|gonative/i.test(ua) || window.median || window.gonative)) return;
+      var root = document.documentElement;
+      if (root.getAttribute('data-sat')) return;
+      var p = document.createElement('div');
+      p.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden;pointer-events:none';
+      root.appendChild(p);
+      var h = p.getBoundingClientRect().height;
+      root.removeChild(p);
+      if (!h){ root.style.setProperty('--sat', '34px'); root.setAttribute('data-sat', '1'); }
+    } catch(e){}
+  }
+  apply();
+  document.addEventListener('DOMContentLoaded', apply);
+  window.addEventListener('load', apply);
+})();
+</script>
 <title>مثلث سلامتی</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,8 +46,9 @@
     --bg: var(--green-050);
     --border: rgba(18,59,38,0.10);
     --shadow: 0 10px 28px rgba(12,58,29,0.10);
+    --sat: env(safe-area-inset-top, 0px);
     box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
+    padding-top: var(--sat);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   @media (prefers-color-scheme: dark) {
@@ -45,7 +69,7 @@
     --green-100: #1B3B26;
     --shadow: 0 10px 28px rgba(0,0,0,0.4);
   }
-  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html { scroll-padding-top: var(--sat); }
   html { height: 100%; }
   body { min-height: 100%; }
   * { box-sizing: border-box; }
@@ -569,7 +593,7 @@
   .menu-drawer {
     position: fixed; top: 0; bottom: 0; right: 0; width: min(84vw, 320px); z-index: 101;
     background: var(--card-bg); color: var(--ink); overflow-y: auto;
-    padding: calc(env(safe-area-inset-top, 0px) + 12px) 0 calc(env(safe-area-inset-bottom, 0px) + 24px);
+    padding: calc(var(--sat) + 12px) 0 calc(env(safe-area-inset-bottom, 0px) + 24px);
     transform: translateX(100%); visibility: hidden;
     transition: transform .28s ease, visibility .28s; box-shadow: -10px 0 30px rgba(0,0,0,0.25);
   }
@@ -692,7 +716,7 @@
   @media (prefers-reduced-motion: reduce) { .cs-art { animation: none; } }
 
   /* ---- Search ---- */
-  .search-wrap { position:sticky; top:calc(env(safe-area-inset-top, 0px) + 8px); z-index:30; margin:-26px 16px 6px; max-width:640px; }
+  .search-wrap { position:sticky; top:calc(var(--sat) + 8px); z-index:30; margin:-26px 16px 6px; max-width:640px; }
   @media (min-width: 700px) { .search-wrap { margin-left:auto; margin-right:auto; } }
   .search-box { display:flex; align-items:center; gap:8px; height:50px; padding:0 16px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); box-shadow:0 10px 24px -8px rgba(12,58,29,.4); }
   .search-box:focus-within { border-color:var(--green-600); box-shadow:0 10px 26px -8px rgba(12,58,29,.5), 0 0 0 3px rgba(60,140,80,.18); }
@@ -789,7 +813,7 @@
   .fld-err { display:none; color:#C0392B; font-size:11.5px; font-weight:600; margin-top:4px; }
   .fld-err.show { display:block; }
   input.bad, textarea.bad, select.bad { border-color:#C0392B !important; }
-  .ord-ov { position:fixed; inset:0; z-index:100000; background:rgba(12,40,22,.55); display:flex; align-items:center; justify-content:center; padding:20px; padding-top:calc(20px + env(safe-area-inset-top, 0px)); padding-bottom:calc(20px + env(safe-area-inset-bottom, 0px)); }
+  .ord-ov { position:fixed; inset:0; z-index:100000; background:rgba(12,40,22,.55); display:flex; align-items:center; justify-content:center; padding:20px; padding-top:calc(20px + var(--sat)); padding-bottom:calc(20px + env(safe-area-inset-bottom, 0px)); }
   .ord-card { width:100%; max-width:380px; background:var(--card-bg); color:var(--ink); border-radius:20px; padding:20px 18px; box-shadow:0 20px 40px -12px rgba(0,0,0,.45); max-height:100%; overflow:auto; }
   .ord-card h3 { margin:0 0 14px; font-size:16px; color:var(--green-700); text-align:center; }
   .ord-lbl { font-size:12px; text-align:center; opacity:.7; }
