@@ -971,10 +971,14 @@
   .tr-tx { min-width:0; display:block; }
   .tr-tx b { display:block; font-size:clamp(10px, 3vw, 11.5px); font-weight:800; line-height:1.55; white-space:nowrap; }
   .tr-tx i { display:block; font-style:normal; font-size:clamp(9px, 2.7vw, 10.5px); opacity:.7; line-height:1.55; white-space:nowrap; }
+.ann-bar { display:none; position:relative; z-index:4; background:#f4d35e; color:#3a2c00; font-size:12px; font-weight:700; line-height:1.8; text-align:center; padding:9px 38px 9px 38px; }
+.ann-bar.show { display:block; }
+.ann-bar .x { position:absolute; left:6px; top:50%; transform:translateY(-50%); background:none; border:0; color:inherit; font-size:16px; padding:6px 10px; cursor:pointer; }
 </style>
 </head>
 <body class="hero-mode">
 
+<div class="ann-bar" id="annBar"><span id="annText"></span><button class="x" id="annX" aria-label="بستن">✕</button></div>
 <div class="promo-strip">
   <span class="text">خرید بالای یک میلیون تومان، ارسال رایگان</span>
 </div>
@@ -2897,7 +2901,15 @@
       '<div class="promo-prices"><span class="old">' + fmt(p.price) + ' ت</span><span class="new">' + fmt(newPrice) + ' تومان</span></div>' +
       '<button class="promo-add" id="promoAdd">افزودن به سبد خرید</button>';
     document.getElementById('promoClose').addEventListener('click', closePromo);
-    document.getElementById('promoAdd').addEventListener('click', function(){ addToCart(p.id, 1); closePromo(); });
+    document.getElementById('promoAdd').addEventListener('click', function(){
+      var btn = this, inCart = cart.find(function(c){ return c.id === p.id; });
+      if (Number(p.stock) > 0 && inCart && inCart.qty >= Number(p.stock)){ toast('بیشتر از موجودی نمی‌تونی اضافه کنی'); return; }
+      addToCart(p.id, 1);
+      var now = cart.find(function(c){ return c.id === p.id; });
+      var q = now ? now.qty : 1;
+      btn.textContent = 'در سبد: ' + fmt(q) + ' عدد (یکی دیگه اضافه کن)';
+      if (Number(p.stock) > 0 && q >= Number(p.stock)){ btn.disabled = true; btn.textContent = 'در سبد: ' + fmt(q) + ' عدد (حداکثر موجودی)'; }
+    });
     promoOverlay.classList.add('open');
   }
   promoOverlay.addEventListener('click', function(e){ if (e.target === promoOverlay) closePromo(); });
@@ -3618,6 +3630,34 @@
   });
   showView(location.hash);
   if (location.hash.replace('#','').replace(/^\//,'') !== 'admin') setTimeout(showPromo, 500);
+
+  // ---- Top strip text follows the free-shipping setting ----
+  (function(){
+    var el = document.querySelector('.promo-strip .text');
+    if (el && PROMO.freeMin) el.textContent = 'خرید بالای ' + (PROMO.freeMin % 1000000 === 0 ? fmt(PROMO.freeMin / 1000000) + ' میلیون' : fmt(PROMO.freeMin)) + ' تومان، ارسال رایگان';
+  })();
+
+  // ---- Announcement bar: message set in products.js (STORE_ANNOUNCEMENT), shown to every customer ----
+  (function(){
+    var A = window.STORE_ANNOUNCEMENT, bar = document.getElementById('annBar');
+    if (!A || !A.text || !bar) return;
+    if (A.until){ var end = new Date(A.until + 'T23:59:59').getTime(); if (end && Date.now() > end) return; }
+    var key = String(A.id || A.text), LS = 'st_ann_seen';
+    try { if (localStorage.getItem(LS) === key) return; } catch(e){}
+    document.getElementById('annText').textContent = A.text;
+    bar.classList.add('show');
+    if (A.link){
+      bar.style.cursor = 'pointer';
+      bar.addEventListener('click', function(e){
+        if (e.target.id === 'annX') return;
+        if (String(A.link).charAt(0) === '#') location.hash = A.link; else window.location.href = A.link;
+      });
+    }
+    document.getElementById('annX').addEventListener('click', function(){
+      bar.classList.remove('show');
+      try { localStorage.setItem(LS, key); } catch(e){}
+    });
+  })();
 })();
 </script>
 </body>
