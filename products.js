@@ -1,4 +1,5 @@
 /* Real product catalog. Raise "version" every time you change this list so customers get the update. */
+window.STORE_BUILD = '2026-10-12-A';
 window.STORE_CATALOG = {
  "version": 3,
  "built": 1791663811165,

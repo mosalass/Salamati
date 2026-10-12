@@ -1512,6 +1512,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
 <div class="overlay" id="adminOverlay">
   <div class="sheet">
     <h2 id="adminTitle">پنل مدیریت</h2>
+    <div id="buildInfo" style="font-size:11px;color:#6b7d70;margin:-6px 0 10px;direction:ltr;text-align:right;"></div>
     <div class="tabs">
       <div class="tab active" data-tab="products">محصولات</div>
       <div class="tab" data-tab="settings">تنظیمات</div>
@@ -2714,7 +2715,9 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   document.getElementById('adminCancel').addEventListener('click', closeLogin);
   adminPass.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
   var adminOverlay = document.getElementById('adminOverlay');
+  var APP_BUILD = '2026-10-12-A';
   function openAdmin(){
+    document.getElementById('buildInfo').textContent = 'index: ' + APP_BUILD + '  |  products: ' + (window.STORE_BUILD || 'OLD');
     renderAdminList();
     document.getElementById('waNumber').value = settings.wa || '';
     adminOverlay.classList.add('open');
