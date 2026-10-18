@@ -1,8 +1,8 @@
-/* Real product catalog. Raise "version" every time you change this list so customers get the update. */
-window.STORE_BUILD = '2026-10-18-D';
+/* Real product catalog (made from the admin panel). Raise "version" every time you change this list so customers get the update. */
+window.STORE_BUILD = "P-20261019-0107";
 window.STORE_CATALOG = {
- "version": 5,
- "built": 1792216620856,
+ "version": 6,
+ "built": 1792359471419,
  "products": [
   {
    "id": "r1",
@@ -20,7 +20,8 @@ window.STORE_CATALOG = {
     "حاوی سلنیوم سولفاید ۲/۵ درصد",
     "ضدشوره",
     "فقط برای استفاده‌ی خارجی"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r2",
@@ -37,7 +38,8 @@ window.STORE_CATALOG = {
     "مناسب مراقبت از پوست دست و پا",
     "برای نواحی خشک مثل زانو و آرنج",
     "همراه با جعبه‌ی اصلی"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r3",
@@ -55,7 +57,8 @@ window.STORE_CATALOG = {
     "سفیدکننده‌ی روزانه",
     "طبق بسته‌بندی، مناسب دندان‌های حساس",
     "همراه با جعبه"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r4",
@@ -66,6 +69,7 @@ window.STORE_CATALOG = {
    "main": "مکمل‌ها",
    "sub": "مولتی‌ویتامین",
    "img": "pr-rainvit-mv.jpg",
+   "desc": "قرص جوشان مولتی‌ویتامین با طعم پرتقال، ۲۰ عددی",
    "about": "سیستم ایمنی بدن است و به حفظ و بهبود سلامت عمومی بدن کمک می کند.\nهمچنین، این مکمل به افزایش سلامت پوست و مو کمک می کند.",
    "features": [
     "قرص جوشان ۲۰ عددی",
@@ -74,7 +78,7 @@ window.STORE_CATALOG = {
     "حمایت تغذیه‌ای روزانه",
     "دارای ویتامین‌های B12، B7، A، D، E، B1، B2، B3، B5، B6 و C"
    ],
-   "desc": "قرص جوشان مولتی‌ویتامین با طعم پرتقال، ۲۰ عددی"
+   "expiry": ""
   },
   {
    "id": "r5",
@@ -91,7 +95,8 @@ window.STORE_CATALOG = {
     "حجم ۴۰۰ میلی‌لیتر",
     "ژل شستشوی صورت",
     "همراه با پمپ"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r6",
@@ -108,7 +113,8 @@ window.STORE_CATALOG = {
     "بسته‌ی ۳۰ عددی",
     "سافت‌ژل",
     "مکمل غذایی"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r7",
@@ -125,7 +131,8 @@ window.STORE_CATALOG = {
     "۱۰۰۰ میلی‌گرم",
     "بسته‌ی ۶۰ عددی",
     "مکمل غذایی"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r8",
@@ -142,7 +149,8 @@ window.STORE_CATALOG = {
     "۱۰۰۰ میلی‌گرم",
     "سافت‌ژل",
     "بسته‌ی ۳۰ عددی"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r9",
@@ -159,7 +167,8 @@ window.STORE_CATALOG = {
     "امگا ۳، ۵، ۶ و ۹",
     "بسته‌ی ۳۰ عددی",
     "مکمل غذایی"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r10",
@@ -175,7 +184,8 @@ window.STORE_CATALOG = {
    "features": [
     "مدل قلمی",
     "همراه با برگه‌ی راهنما"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r11",
@@ -192,7 +202,8 @@ window.STORE_CATALOG = {
     "حجم ۱۶۰ میلی‌لیتر",
     "مناسب پوست خشک و خیلی خشک",
     "پاک‌کننده‌ی آرایش"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r12",
@@ -208,7 +219,8 @@ window.STORE_CATALOG = {
    "features": [
     "اسکراب پاک‌کننده",
     "بسته‌بندی تیوپ"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r13",
@@ -224,7 +236,8 @@ window.STORE_CATALOG = {
    "features": [
     "تونر صورت",
     "تمیزکننده و روشن‌کننده"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r14",
@@ -240,7 +253,8 @@ window.STORE_CATALOG = {
    "features": [
     "تونر صورت",
     "تمیزکننده"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r15",
@@ -256,7 +270,8 @@ window.STORE_CATALOG = {
    "features": [
     "تونر صورت",
     "تنظیم‌کننده‌ی چربی و براقیت"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r16",
@@ -272,7 +287,8 @@ window.STORE_CATALOG = {
    "features": [
     "مناسب انواع پوست",
     "میسلار واتر"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r17",
@@ -288,7 +304,8 @@ window.STORE_CATALOG = {
    "features": [
     "چسب مگس",
     "دور از دسترس کودکان"
-   ]
+   ],
+   "expiry": ""
   },
   {
    "id": "r18",
@@ -304,29 +321,22 @@ window.STORE_CATALOG = {
    "features": [
     "حشره‌کش",
     "دور از دسترس کودکان و حیوانات"
-   ]
+   ],
+   "expiry": ""
   }
  ]
 };
 
-/* Message shown at the top of the app for every customer.
-   - text: the message. id: change it to show a NEW message again to people who closed the old one.
-   - link (optional): a page inside the app like '#/category/...' or a full web address.
-   - until (optional): last day to show it, like '2026-11-30'.
-   To turn it off, set it to null. */
+/* Announcement bar: { id, text, link, until }. null = off. */
 window.STORE_ANNOUNCEMENT = null;
 
-/* Small banners 1-4 (the 4 cards under the popular brands; row 1: banner 1 on the right, banner 2 on the left; row 2: banner 3 right, banner 4 left). Leave as null to use the built-in ones.
-   Prepare this block from the admin panel: Tools tab > Banners > "آماده‌سازی برای انتشار". */
+/* Small banners 1-4. null = built-in. */
 window.STORE_BANNERS = null;
 
-/* Big banners 1 and 2 (above the popular brands): image file name and the category it opens, written like 'cat:main category/sub category'.
-   [big banner 1, big banner 2]. Use null to keep the built-in drawing for that banner. */
-window.STORE_HERO_BANNERS = [null, { img: 'banner-protein.jpg', link: 'cat:مکمل‌ها/پروتئین' }];
+/* Big banners 1 and 2. */
+window.STORE_HERO_BANNERS = [null,{"img":"banner-protein.jpg","link":"cat:مکمل‌ها/پروتئین"}];
 
-/* Health articles shown at the bottom of the home page. Add a new article by copying one block; each needs a unique id.
-   products: up to 3 product ids shown under the article as "related products".
-   main (optional): a product main category; available products from it are added automatically. Only related products are shown. */
+/* Health articles. */
 window.STORE_ARTICLES = [
  {
   "id": "a1",
