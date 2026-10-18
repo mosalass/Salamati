@@ -1,8 +1,8 @@
 /* Real product catalog (made from the admin panel). Raise "version" every time you change this list so customers get the update. */
-window.STORE_BUILD = "P-20261019-0107";
+window.STORE_BUILD = "P-20261019-0112";
 window.STORE_CATALOG = {
- "version": 6,
- "built": 1792359471419,
+ "version": 7,
+ "built": 1792359743261,
  "products": [
   {
    "id": "r1",
@@ -21,7 +21,17 @@ window.STORE_CATALOG = {
     "ضدشوره",
     "فقط برای استفاده‌ی خارجی"
    ],
-   "expiry": ""
+   "expiry": "",
+   "disc": 8,
+   "ship": {
+    "courier": 90000,
+    "post": 167000,
+    "pickup": 0
+   },
+   "flash": {
+    "pct": 8,
+    "hours": 24
+   }
   },
   {
    "id": "r2",
