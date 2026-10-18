@@ -1156,7 +1156,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   <section class="trust" aria-label="مزایای خرید از مثلث سلامتی">
     <div class="tr-card" style="--tc:#1E8E5A;--tcb:rgba(30,142,90,.14);"><span class="tr-ic"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3v5.2c0 4.6-3.1 8.1-7.5 9.8-4.4-1.7-7.5-5.2-7.5-9.8V6z" fill="currentColor" fill-opacity=".14"/><path d="M8.6 12.2l2.4 2.4 4.6-5"/></svg></span><span class="tr-tx"><b>ضمانت اصالت کالا</b><i>اصل و دارای مجوز</i></span></div>
     <div class="tr-card" style="--tc:#1E7FC4;--tcb:rgba(30,127,196,.14);"><span class="tr-ic"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10.5A8 8 0 0 0 5.6 6.8M4 3.5v4h4"/><path d="M4 13.5a8 8 0 0 0 14.4 3.7M20 20.5v-4h-4"/><path d="M12 9.2l2.6 1.4v2.8L12 14.8l-2.6-1.4v-2.8z" fill="currentColor" fill-opacity=".16"/></svg></span><span class="tr-tx"><b>ضمانت تعویض کالا</b><i>کالای معیوب یا اشتباه</i></span></div>
-    <div class="tr-card" style="--tc:#E0872B;--tcb:rgba(224,135,43,.16);"><span class="tr-ic"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6.5h9.5v9H5z" fill="currentColor" fill-opacity=".14"/><path d="M14.5 9.5h3.6l2.9 3v3h-6.5z"/><circle cx="8.5" cy="17.8" r="1.7"/><circle cx="17.5" cy="17.8" r="1.7"/><path d="M1.5 9.5h2.5M2.5 12.5H4"/></svg></span><span class="tr-tx"><b>ارسال سریع</b><i>۱ تا ۳ روز کاری</i></span></div>
+    <div class="tr-card" style="--tc:#E0872B;--tcb:rgba(224,135,43,.16);"><span class="tr-ic"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6.5h9.5v9H5z" fill="currentColor" fill-opacity=".14"/><path d="M14.5 9.5h3.6l2.9 3v3h-6.5z"/><circle cx="8.5" cy="17.8" r="1.7"/><circle cx="17.5" cy="17.8" r="1.7"/><path d="M1.5 9.5h2.5M2.5 12.5H4"/></svg></span><span class="tr-tx"><b>زمان ارسال شفاف</b><i>در صفحه‌ی هر کالا</i></span></div>
     <div class="tr-card" style="--tc:#8A5CD6;--tcb:rgba(138,92,214,.14);"><span class="tr-ic"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.2 8.2 0 0 1-11.7 7.4L4 20.5l1.7-4.7A8.2 8.2 0 1 1 21 11.5z" fill="currentColor" fill-opacity=".14"/><path d="M8.5 11.6h.01M12.2 11.6h.01M15.9 11.6h.01"/></svg></span><span class="tr-tx"><b>پشتیبانی هر روز</b><i>۹ صبح تا ۹ شب</i></span></div>
   </section>
 
@@ -1282,7 +1282,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     <div class="page-box" style="margin-top:16px; background: var(--green-050);">
       <h2 style="font-size:14px;">قوانین ثبت و ارسال سفارش</h2>
       <ul class="contact-list" style="font-size:12px; line-height:1.8;">
-        <li>سفارش پس از ثبت، طی ۱ تا ۳ روز کاری (بسته به روش ارسال انتخابی) پردازش و ارسال می‌شه.</li>
+        <li id="cartPrepLine">زمان آماده‌سازی هر کالا در صفحه‌ی همان کالا اعلام می‌شود و سفارش پس از آماده‌سازی به پیک یا پست تحویل داده می‌شود.</li>
         <li>در صورت ناموجود بودن هر قلم پس از ثبت سفارش، مبلغ همون قلم به مشتری اطلاع‌رسانی و بازگردانده می‌شه.</li>
         <li>امکان مرجوعی کالاهای دارویی و بهداشتی باز‌شده، طبق قوانین بهداشتی، وجود نداره؛ کالای دارای مشکل یا ارسال اشتباه ظرف ۲۴ ساعت قابل تعویضه.</li>
         <li>هزینه ارسال بر عهده مشتریه مگر در طرح‌های ارسال رایگان اعلام‌شده.</li>
@@ -1544,6 +1544,8 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       <textarea id="pAbout" placeholder="یه توضیح کوتاه و جذاب درباره محصول"></textarea>
       <label>تاریخ انقضا (به‌صورت متن)</label>
       <input id="pExpiry" placeholder="مثلاً: بیش از ۱ سال، یا: تا ۳ ماه">
+      <label>زمان آماده‌سازی و ارسال (به روز کاری) <span class="req">*</span></label>
+      <input id="pPrep" inputmode="numeric" placeholder="مثلاً ۲ (یعنی تا ۲ روز کاری)">
       <label>سردسته</label>
       <select id="pMain" class="cat-select"></select>
       <label>زیردسته</label>
@@ -1881,7 +1883,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     var p = {
       id:String(fp.id), name:String(fp.name || ''), price:Number(fp.price) || 0, desc:fp.desc || '', stock:Number(fp.stock) || 0,
       category:fp.sub || '', main:fp.main || 'سایر', sub:fp.sub || 'متفرقه', brand:fp.brand || '',
-      features:Array.isArray(fp.features) ? fp.features : [], about:fp.about || fp.desc || '', expiry:fp.expiry || '', img:fp.img || '', disc:Number(fp.disc) || 0,
+      features:Array.isArray(fp.features) ? fp.features : [], about:fp.about || fp.desc || '', expiry:fp.expiry || '', prep:Number(fp.prep) || 0, img:fp.img || '', disc:Number(fp.disc) || 0,
       ship:{ courier:Number(sh.courier != null ? sh.courier : 30000), post:Number(sh.post != null ? sh.post : 45000), pickup:Number(sh.pickup) || 0 },
       date:new Date(base).toISOString().slice(0, 10), added:base - i * 1000, upd:0
     };
@@ -2137,6 +2139,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       '<div class="pd-price">' + priceHtml(p) + '</div>' +
       '<div style="font-size:12px;">' + (out ? 'ناموجود' : 'موجودی: ' + fmt(p.stock) + ' عدد') + '</div>' +
       (p.expiry ? '<div style="font-size:12px;margin-top:2px;">تاریخ انقضا: ' + escapeHtml(p.expiry) + '</div>' : '') +
+      '<div style="font-size:12px;margin-top:2px;">زمان آماده‌سازی و ارسال: تا ' + fmt(prepDays(p)) + ' روز کاری</div>' +
       feats;
     document.getElementById('pdDesc').textContent = p.about || p.desc || '';
     var addBtn = document.getElementById('pdAddCart');
@@ -2169,6 +2172,12 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   // ---- Cart page ----
   var COUPONS = {}; // e.g. { 'WELCOME10': 0.10 }
   var appliedDiscountPct = 0;
+  function prepDays(p){ var n = Math.floor(Number(p && p.prep)); return (n >= 1 && n <= 30) ? n : 3; }
+  function cartPrepMax(){
+    var m = 0;
+    cart.forEach(function(item){ var tp = products.find(function(x){ return x.id === item.id; }); if (tp) m = Math.max(m, prepDays(tp)); });
+    return m;
+  }
   function renderCart(){
     var trimmed = false;
     cart = cart.filter(function(c){
@@ -2223,6 +2232,8 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     document.getElementById('cartDiscountLine').textContent = discountAmt ? '-' + fmt(discountAmt) + ' ت' : '۰ ت';
     document.getElementById('cartShipLine').textContent = method ? fmt(shipTotal) + ' ت' : 'بعد از انتخاب روش ارسال';
     document.getElementById('cartTotalLine').textContent = fmt(total) + ' ت';
+    var prepEl = document.getElementById('cartPrepLine');
+    if (prepEl) prepEl.textContent = 'زمان آماده‌سازی سفارش شما: تا ' + fmt(cartPrepMax()) + ' روز کاری (بر اساس کالایی که بیشترین زمان آماده‌سازی را دارد). پس از آماده‌سازی، سفارش به پیک یا پست تحویل داده می‌شود.';
     document.getElementById('cartCheckout').disabled = !document.getElementById('agreeTerms').checked;
     syncSticky();
   }
@@ -2648,6 +2659,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     lines.push('جمع محصولات: ' + fmt(subtotal) + ' ت');
     if (discountAmt) lines.push('تخفیف' + (pr.label ? ' (' + pr.label + ')' : '') + ': -' + fmt(discountAmt) + ' ت');
     lines.push('روش ارسال: ' + methodLabel);
+    lines.push('زمان آماده‌سازی: تا ' + fmt(cartPrepMax()) + ' روز کاری');
     lines.push('هزینه ارسال: ' + (shipTotal ? fmt(shipTotal) + ' ت' : 'رایگان'));
     lines.push('*جمع کل: ' + fmt(total) + ' ت*');
     lines.push('', '*مشخصات مشتری*');
@@ -2719,7 +2731,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   document.getElementById('adminCancel').addEventListener('click', closeLogin);
   adminPass.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
   var adminOverlay = document.getElementById('adminOverlay');
-  var APP_BUILD = '2026-10-12-B';
+  var APP_BUILD = '2026-10-18-C';
   function openAdmin(){
     document.getElementById('buildInfo').textContent = 'index: ' + APP_BUILD + '  |  products: ' + (window.STORE_BUILD || 'OLD');
     renderAdminList();
@@ -3049,6 +3061,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       document.getElementById('pFeatures').value = (p.features || []).join('\n');
       document.getElementById('pAbout').value = p.about || '';
       document.getElementById('pExpiry').value = p.expiry || '';
+      document.getElementById('pPrep').value = p.prep || '';
       setCatSel(p.main, p.sub);
       document.getElementById('pBrand').value = p.brand || '';
       editFlashOrig = null;
@@ -3084,7 +3097,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     editingId = null; pickedImg = ''; editFlashOrig = null;
     document.getElementById('pImgPreview').innerHTML = PH_IMG;
     document.getElementById('pImgInput').value = '';
-    ['pName','pPrice','pStock','pDesc','pFeatures','pAbout','pExpiry','pShipCourier','pShipPost','pShipPickup','pBrand','pFlashPct','pFlashH','pFlashM','pFlashS'].forEach(function(id){
+    ['pName','pPrice','pStock','pDesc','pFeatures','pAbout','pExpiry','pPrep','pShipCourier','pShipPost','pShipPickup','pBrand','pFlashPct','pFlashH','pFlashM','pFlashS'].forEach(function(id){
       document.getElementById(id).value = '';
     });
     setCatSel(CATS[0].n, CATS[0].subs[0]);
@@ -3106,6 +3119,8 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       pickup: parseInt(document.getElementById('pShipPickup').value, 10) || 0
     };
     if (!name || !price){ toast('نام و قیمت محصول رو وارد کن'); return; }
+    var prep = parseInt(faToEn(document.getElementById('pPrep').value), 10);
+    if (!prep || prep < 1 || prep > 30){ toast('زمان آماده‌سازی رو به روز کاری وارد کن (عدد ۱ تا ۳۰)'); document.getElementById('pPrep').focus(); return; }
     var fPct = document.getElementById('pFlashPct').value.trim(), fH = document.getElementById('pFlashH').value.trim(),
         fM = document.getElementById('pFlashM').value.trim(), fS = document.getElementById('pFlashS').value.trim();
     var flash = null;
@@ -3120,13 +3135,13 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     if (editingId){
       products = products.map(function(p){
         if (p.id !== editingId) return p;
-        return Object.assign({}, p, { id:p.id, name:name, price:price, desc:desc, stock:stock, category:sub, main:main, sub:sub, ship:ship, features:features, about:about, expiry:document.getElementById('pExpiry').value.trim(), date:p.date, added:p.added, upd:((price !== Number(p.price) || stock !== Number(p.stock)) ? Date.now() : p.upd), img:pickedImg, brand:document.getElementById('pBrand').value, flash:flash });
+        return Object.assign({}, p, { id:p.id, name:name, price:price, desc:desc, stock:stock, category:sub, main:main, sub:sub, ship:ship, features:features, about:about, expiry:document.getElementById('pExpiry').value.trim(), prep:prep, date:p.date, added:p.added, upd:((price !== Number(p.price) || stock !== Number(p.stock)) ? Date.now() : p.upd), img:pickedImg, brand:document.getElementById('pBrand').value, flash:flash });
       });
       toast('تغییرات ذخیره شد');
     } else {
       products.push({
         id: 'p_' + Date.now(), name:name, price:price, desc:desc, stock:stock, category:sub, main:main, sub:sub,
-        ship:ship, features:features, about:about, expiry:document.getElementById('pExpiry').value.trim(), date:new Date().toISOString().slice(0,10), added:Date.now(), img:pickedImg, brand:document.getElementById('pBrand').value, flash:flash
+        ship:ship, features:features, about:about, expiry:document.getElementById('pExpiry').value.trim(), prep:prep, date:new Date().toISOString().slice(0,10), added:Date.now(), img:pickedImg, brand:document.getElementById('pBrand').value, flash:flash
       });
       toast('محصول اضافه شد');
     }
@@ -3896,7 +3911,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     { k:['دوز','عوارض','تداخل','بارداری','شیردهی','مصرف دارو','نحوه مصرف','چطور مصرف','چند بار','نسخه'], r:function(){ return { html:'برای مصرف، دوز و تداخل دارویی لازم است با پزشک یا داروساز مشورت کنید. این دستیار قادر به ارائه‌ی توصیه‌ی پزشکی نیست. می‌توانید پرسش خود را با پشتیبان در واتساپ مطرح کنید.' + waBtn('گفتگو با پشتیبان در واتساپ', 'سلام، یک سؤال درباره‌ی مصرف دارو دارم: ' + (chatLastUser || '')) }; } },
     { k:['مرجوع','تعویض','برگشت','عودت','خراب','اشتباه'], r:function(){ return { html:'کالاهای دارویی و بهداشتی بازشده، طبق ضوابط بهداشتی، قابل مرجوع نیستند. در صورت وجود مشکل در کالا یا ارسال اشتباه، تعویض ظرف ۲۴ ساعت امکان‌پذیر است. برای تعویض، با ذکر کد پیگیری سفارش با پشتیبانی در تماس باشید.' + waBtn('تماس با پشتیبان در واتساپ', 'سلام، برای تعویض کالا پیام می‌دهم. کد پیگیری سفارش: ') }; } },
     { k:['پرداخت','درگاه','کارت','نقدی','پول'], r:function(){ return { html:'ثبت سفارش با ارسال پیام در واتساپ نهایی می‌شود و نحوه‌ی پرداخت نیز در همان گفتگو هماهنگ می‌شود. پرداخت آنلاین با درگاه بانکی در آینده اضافه خواهد شد.' }; } },
-    { k:['ارسال','پیک','پست','هزینه','کی میرسه','کی می رسه','تحویل','رایگان'], r:function(){ return { html:'سه روش ارسال وجود دارد: پیک شهری، پست و تحویل حضوری. هزینه‌ی ارسال پس از انتخاب روش در سبد خرید نمایش داده می‌شود. سفارش‌ها ظرف ۱ تا ۳ روز کاری، بسته به روش ارسال، پردازش و ارسال می‌شوند. شرایط طرح‌های ارسال رایگان نیز در بالای سایت اعلام می‌شود.' }; } },
+    { k:['ارسال','پیک','پست','هزینه','کی میرسه','کی می رسه','تحویل','رایگان'], r:function(){ return { html:'سه روش ارسال وجود دارد: پیک شهری، پست و تحویل حضوری. هزینه‌ی ارسال پس از انتخاب روش در سبد خرید نمایش داده می‌شود. زمان آماده‌سازی هر کالا در صفحه‌ی همان کالا و در سبد خرید اعلام می‌شود و سفارش پس از آماده‌سازی به پیک یا پست تحویل داده می‌شود. شرایط طرح‌های ارسال رایگان نیز در بالای سایت اعلام می‌شود.' }; } },
     { k:['ساعت','کاری','پاسخگویی','باز هستید','چه ساعتی'], r:function(){ return { html:'پشتیبانی هر روز از ساعت ۹ صبح تا ۹ شب پاسخگوست.' }; } },
     { k:['ثبت سفارش','چطور سفارش','چگونه سفارش','چجوری سفارش','راهنمای خرید','نحوه خرید','نحوه سفارش'], r:function(){ return { html:'برای ثبت سفارش، محصول را به سبد خرید اضافه کنید، روش ارسال و اطلاعات خود را وارد کنید و دکمه‌ی «ثبت سفارش نهایی» را بزنید. سپس پیام آماده‌ی سفارش را در واتساپ ارسال کنید تا سفارش نهایی شود.<a class="cm-link" href="#/info/buy">مشاهده‌ی راهنمای کامل خرید ‹</a>' }; } },
     { s:true, k:['ممنون','مرسی','تشکر','سپاس'], r:function(){ return { html:'خواهش می‌کنم. اگر پرسش دیگری دارید، در خدمتم.' }; } },
@@ -3998,49 +4013,49 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   var INFO_PAGES = {
     buy: { title:'راهنمای خرید', html: [
       '<ol>',
-      '<li>محصول رو از دسته‌بندی‌ها یا با جستجو پیدا کنید و «افزودن به سبد» رو بزنید.</li>',
-      '<li>وارد «سبد خرید» بشید و تعداد محصولات رو بررسی کنید.</li>',
-      '<li>روش ارسال رو انتخاب کنید و نام، شماره موبایل، کد پستی و آدرس رو وارد کنید. برای تحویل حضوری، کد پستی و آدرس لازم نیست.</li>',
-      '<li>اگه کد تخفیف دارید وارد کنید، قوانین رو بپذیرید و «ثبت سفارش نهایی» رو بزنید.</li>',
-      '<li>کد پیگیری سفارش نمایش داده می‌شه. اون رو نگه دارید و پیام آماده‌ی سفارش رو توی واتساپ برای ما بفرستید تا سفارش نهایی بشه.</li>',
+      '<li>محصول مورد نظر را از دسته‌بندی‌ها یا با جستجو پیدا کنید و گزینه‌ی «افزودن به سبد» را بزنید.</li>',
+      '<li>وارد «سبد خرید» شوید و تعداد محصولات را بررسی کنید.</li>',
+      '<li>روش ارسال را انتخاب کنید و نام، شماره موبایل، کد پستی و آدرس خود را وارد نمایید. برای تحویل حضوری، وارد کردن کد پستی و آدرس لازم نیست.</li>',
+      '<li>در صورت داشتن کد تخفیف، آن را وارد کنید، قوانین را بپذیرید و دکمه‌ی «ثبت سفارش نهایی» را بزنید.</li>',
+      '<li>کد پیگیری سفارش نمایش داده می‌شود. آن را نزد خود نگه دارید و پیام آماده‌ی سفارش را در واتساپ برای ما ارسال کنید تا سفارش نهایی شود.</li>',
       '</ol>'].join('') },
     ship: { title:'روش‌های ارسال', html: [
-      '<p>سه روش برای دریافت سفارش وجود داره:</p>',
+      '<p>برای دریافت سفارش، سه روش وجود دارد:</p>',
       '<ul><li>پیک شهری</li><li>پست</li><li>تحویل حضوری</li></ul>',
-      '<p>هزینه‌ی ارسال هر روش، بعد از انتخاب در سبد خرید نمایش داده می‌شه.</p>',
-      '<p>سفارش پس از ثبت، طی ۱ تا ۳ روز کاری (بسته به روش ارسال انتخابی) پردازش و ارسال می‌شه.</p>',
-      '<p>هزینه‌ی ارسال بر عهده‌ی مشتریه، مگر در طرح‌های ارسال رایگان اعلام‌شده.</p>'].join('') },
+      '<p>هزینه‌ی ارسال هر روش پس از انتخاب آن در سبد خرید نمایش داده می‌شود.</p>',
+      '<p>زمان آماده‌سازی هر کالا، بر حسب روز کاری، در صفحه‌ی همان کالا اعلام می‌شود. اگر سفارش شامل چند کالا باشد، زمان آماده‌سازی کل سفارش برابر با بیشترین زمان آماده‌سازی میان کالاهای سبد است. پس از آماده‌سازی، سفارش به پیک یا پست تحویل داده می‌شود.</p>',
+      '<p>هزینه‌ی ارسال بر عهده‌ی مشتری است، مگر در طرح‌های ارسال رایگانی که اعلام شده است.</p>'].join('') },
     pay: { title:'روش‌های پرداخت', html: [
-      '<p>ثبت سفارش با ارسال پیام واتساپ نهایی می‌شه و نحوه‌ی پرداخت هم در همون گفتگو با شما هماهنگ می‌شه.</p>',
-      '<p>پرداخت آنلاین با درگاه بانکی بعداً به فروشگاه اضافه می‌شه.</p>'].join('') },
+      '<p>ثبت سفارش با ارسال پیام در واتساپ نهایی می‌شود و نحوه‌ی پرداخت نیز در همان گفتگو با شما هماهنگ می‌گردد.</p>',
+      '<p>پرداخت آنلاین از طریق درگاه بانکی در آینده به فروشگاه افزوده خواهد شد.</p>'].join('') },
     faq: { title:'پرسش‌های متداول', html: [
-      '<details><summary>چطور سفارش بدم؟</summary><p>مراحل رو توی صفحه‌ی «راهنمای خرید» توضیح دادیم. مهم‌ترین نکته اینه که بعد از ثبت سفارش، پیام آماده رو توی واتساپ بفرستید.</p></details>',
-      '<details><summary>سفارشم کی می‌رسه؟</summary><p>سفارش طی ۱ تا ۳ روز کاری (بسته به روش ارسال) پردازش و ارسال می‌شه.</p></details>',
-      '<details><summary>اگه کالایی ناموجود بشه چی؟</summary><p>اگه بعد از ثبت سفارش یکی از اقلام ناموجود باشه، مبلغ همون قلم به شما اطلاع داده و بازگردانده می‌شه.</p></details>',
-      '<details><summary>می‌تونم کالا رو مرجوع کنم؟</summary><p>کالاهای دارویی و بهداشتی باز‌شده طبق قوانین بهداشتی مرجوع نمی‌شن. کالای دارای مشکل یا ارسال اشتباه ظرف ۲۴ ساعت قابل تعویضه.</p></details>',
-      '<details><summary>سفارشم رو چطور پیگیری کنم؟</summary><p>کد پیگیری سفارش رو توی واتساپ برای ما بفرستید تا وضعیت رو اطلاع بدیم.</p></details>',
-      '<details><summary>ساعات پاسخگویی چیه؟</summary><p>هر روز از ۹ صبح تا ۹ شب.</p></details>'].join('') },
+      '<details><summary>چگونه سفارش ثبت کنم؟</summary><p>مراحل ثبت سفارش در صفحه‌ی «راهنمای خرید» توضیح داده شده است. مهم‌ترین نکته آن است که پس از ثبت سفارش، پیام آماده‌ی سفارش را در واتساپ ارسال کنید.</p></details>',
+      '<details><summary>سفارش من چه زمانی ارسال می‌شود؟</summary><p>زمان آماده‌سازی هر کالا در صفحه‌ی همان کالا و در سبد خرید، بر حسب روز کاری، اعلام می‌شود. پس از آماده‌سازی، سفارش به پیک یا پست تحویل داده می‌شود.</p></details>',
+      '<details><summary>اگر کالایی ناموجود شود چه می‌شود؟</summary><p>اگر پس از ثبت سفارش یکی از اقلام ناموجود باشد، موضوع به شما اطلاع داده می‌شود و مبلغ همان قلم بازگردانده خواهد شد.</p></details>',
+      '<details><summary>آیا امکان مرجوع کردن کالا وجود دارد؟</summary><p>کالاهای دارویی و بهداشتی بازشده، طبق قوانین بهداشتی، قابل مرجوع نیستند. در صورت وجود مشکل در کالا یا ارسال اشتباه، کالا ظرف ۲۴ ساعت قابل تعویض است.</p></details>',
+      '<details><summary>سفارش خود را چگونه پیگیری کنم؟</summary><p>کد پیگیری سفارش را در واتساپ برای ما ارسال کنید تا وضعیت سفارش به شما اطلاع داده شود.</p></details>',
+      '<details><summary>ساعات پاسخگویی چیست؟</summary><p>هر روز از ساعت ۹ صبح تا ۹ شب.</p></details>'].join('') },
     track: { title:'پیگیری سفارشات', html: [
-      '<p>بعد از ثبت هر سفارش، یه کد پیگیری مثل <b dir="ltr">MS-7K4Q9X</b> به شما نمایش داده می‌شه و توی پیام واتساپ سفارش هم هست.</p>',
-      '<p>برای پیگیری، همین کد رو توی واتساپ برای ما بفرستید تا وضعیت سفارش رو اطلاع بدیم. ساعات پاسخگویی: هر روز ۹ صبح تا ۹ شب.</p>',
+      '<p>پس از ثبت هر سفارش، یک کد پیگیری مانند <b dir="ltr">MS-7K4Q9X</b> به شما نمایش داده می‌شود و در پیام واتساپ سفارش نیز درج شده است.</p>',
+      '<p>برای پیگیری، همین کد را در واتساپ برای ما ارسال کنید تا وضعیت سفارش را به شما اطلاع دهیم. ساعات پاسخگویی: هر روز از ۹ صبح تا ۹ شب.</p>',
       '<div id="trackBtnBox"></div>'].join('') },
     terms: { title:'شرایط و قوانین', html: [
       '<ul>',
-      '<li>سفارش پس از ثبت، طی ۱ تا ۳ روز کاری (بسته به روش ارسال انتخابی) پردازش و ارسال می‌شه.</li>',
-      '<li>در صورت ناموجود بودن هر قلم پس از ثبت سفارش، مبلغ همون قلم به مشتری اطلاع‌رسانی و بازگردانده می‌شه.</li>',
-      '<li>امکان مرجوعی کالاهای دارویی و بهداشتی باز‌شده، طبق قوانین بهداشتی، وجود نداره؛ کالای دارای مشکل یا ارسال اشتباه ظرف ۲۴ ساعت قابل تعویضه.</li>',
-      '<li>هزینه ارسال بر عهده مشتریه مگر در طرح‌های ارسال رایگان اعلام‌شده.</li>',
-      '<li>اطلاعات محصولات جایگزین مشاوره‌ی پزشک یا داروساز نیست. قبل از مصرف، دستور روی بسته یا نظر پزشک و داروساز رو رعایت کنید.</li>',
-      '<li>ثبت سفارش به‌منزله‌ی پذیرش این قوانینه.</li>',
+      '<li>زمان آماده‌سازی هر کالا در صفحه‌ی همان کالا اعلام می‌شود. زمان آماده‌سازی کل سفارش برابر با بیشترین زمان آماده‌سازی میان اقلام سبد است و سفارش پس از آماده‌سازی به پیک یا پست تحویل داده می‌شود.</li>',
+      '<li>در صورت ناموجود بودن هر قلم پس از ثبت سفارش، مبلغ همان قلم به مشتری اطلاع‌رسانی و بازگردانده می‌شود.</li>',
+      '<li>مرجوع کردن کالاهای دارویی و بهداشتی بازشده، طبق قوانین بهداشتی، امکان‌پذیر نیست. کالای دارای مشکل یا ارسال اشتباه، ظرف ۲۴ ساعت قابل تعویض است.</li>',
+      '<li>هزینه‌ی ارسال بر عهده‌ی مشتری است، مگر در طرح‌های ارسال رایگان اعلام‌شده.</li>',
+      '<li>اطلاعات محصولات جایگزین مشاوره‌ی پزشک یا داروساز نیست. پیش از مصرف، دستور روی بسته‌بندی یا نظر پزشک و داروساز را رعایت کنید.</li>',
+      '<li>ثبت سفارش به منزله‌ی پذیرش این قوانین است.</li>',
       '</ul>'].join('') },
     privacy: { title:'حریم خصوصی', html: [
-      '<p>موقع ثبت سفارش، این اطلاعات رو از شما می‌گیریم: نام، شماره موبایل، کد پستی، آدرس و توضیحات سفارش.</p>',
-      '<p>این اطلاعات فقط برای پردازش، ارسال و پیگیری سفارش شما استفاده می‌شه و در اختیار شخص ثالث قرار نمی‌گیره، مگر برای رساندن سفارش.</p>',
-      '<p>برای راحتی خرید بعدی، نام، موبایل، کد پستی و آدرس شما روی همین دستگاه ذخیره می‌شه.</p>'].join('') },
+      '<p>هنگام ثبت سفارش، اطلاعات زیر از شما دریافت می‌شود: نام، شماره موبایل، کد پستی، آدرس و توضیحات سفارش.</p>',
+      '<p>این اطلاعات صرفاً برای پردازش، ارسال و پیگیری سفارش شما استفاده می‌شود و جز برای رساندن سفارش، در اختیار شخص ثالث قرار نمی‌گیرد.</p>',
+      '<p>برای سهولت در خرید بعدی، نام، شماره موبایل، کد پستی و آدرس شما روی همین دستگاه ذخیره می‌شود.</p>'].join('') },
     warranty: { title:'ضمانت و بازگشت کالا', html: [
-      '<p>تمام محصولات ما اصل و دارای مجوزهای لازم هستن.</p>',
-      '<p>کالاهای دارویی و بهداشتی باز‌شده، طبق قوانین بهداشتی، قابل مرجوع کردن نیستن.</p>',
-      '<p>اگه کالا مشکل داشت یا اشتباه براتون ارسال شد، ظرف ۲۴ ساعت قابل تعویضه. برای تعویض، از طریق واتساپ و با ذکر کد پیگیری سفارش با ما در تماس باشید.</p>'].join('') }
+      '<p>تمامی محصولات ما اصل و دارای مجوزهای لازم هستند.</p>',
+      '<p>کالاهای دارویی و بهداشتی بازشده، طبق قوانین بهداشتی، قابل مرجوع کردن نیستند.</p>',
+      '<p>در صورت وجود مشکل در کالا یا ارسال اشتباه، کالا ظرف ۲۴ ساعت قابل تعویض است. برای تعویض، از طریق واتساپ و با ذکر کد پیگیری سفارش با ما در تماس باشید.</p>'].join('') }
   };
   function renderInfo(key){
     var pg = INFO_PAGES[key];
