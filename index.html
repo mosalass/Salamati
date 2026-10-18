@@ -1588,9 +1588,6 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
         <button class="btn-primary" id="waSave" style="flex:none; width:100%;">ذخیره شماره</button>
       </div>
 
-      <label style="margin-top:18px;">بنرهای بزرگ (۲ تا، زیر پیشنهاد شگفت‌انگیز)</label>
-      <div class="hint">عکس بنر رو از گالری انتخاب کن. اندازه‌ی پیشنهادی: ۱۲۰۰×۵۲۵ پیکسل (مستطیل افقی). نوشته‌ها باید داخل خود عکس باشن.</div>
-      <div id="bannerAdmin"></div>
 
       <label style="margin-top:18px;">لوگوی برندها (بخش محبوب‌ترین برندها)</label>
       <div class="hint">لوگوی رسمی هر برند رو از گالری انتخاب کن. اگه نذاری، یه آرم ساده با حرف اول اسم برند نمایش داده میشه.</div>
@@ -1614,6 +1611,13 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       <div class="hint">لیست رو دانلود کن، توی اکسل فقط ستون‌های قیمت و موجودی رو عوض کن، با فرمت CSV UTF-8 ذخیره کن و دوباره بارگذاری کن. ستون کد و نام رو دست نزن.</div>
       <div class="sheet-actions"><button class="btn-secondary" id="csvOut" style="flex:none; width:100%;">دانلود لیست</button></div>
       <label class="file-btn">بارگذاری لیست ویرایش‌شده<input type="file" id="csvIn" accept=".csv,text/csv,text/plain"></label>
+        </div>
+      </details>
+      <details class="tl-sec" id="tlBig">
+        <summary>بنرهای بزرگ (۲ تا، زیر پیشنهاد شگفت‌انگیز)</summary>
+        <div class="tl-body">
+          <div class="hint">عکس بنر رو از گالری انتخاب کن. اندازه‌ی پیشنهادی: ۱۲۰۰×۵۲۵ پیکسل (مستطیل افقی). نوشته‌ها باید داخل خود عکس باشن. بنر بزرگ ۱ و ۲ از بالا به پایین‌اند.</div>
+          <div id="bannerAdmin"></div>
         </div>
       </details>
       <details class="tl-sec">
@@ -2715,7 +2719,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   document.getElementById('adminCancel').addEventListener('click', closeLogin);
   adminPass.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
   var adminOverlay = document.getElementById('adminOverlay');
-  var APP_BUILD = '2026-10-12-A';
+  var APP_BUILD = '2026-10-12-B';
   function openAdmin(){
     document.getElementById('buildInfo').textContent = 'index: ' + APP_BUILD + '  |  products: ' + (window.STORE_BUILD || 'OLD');
     renderAdminList();
