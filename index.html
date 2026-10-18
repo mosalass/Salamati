@@ -1546,6 +1546,8 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       <input id="pExpiry" placeholder="مثلاً: بیش از ۱ سال، یا: تا ۳ ماه">
       <label>زمان آماده‌سازی و ارسال (به روز کاری) <span class="req">*</span></label>
       <input id="pPrep" inputmode="numeric" placeholder="مثلاً ۲ (یعنی تا ۲ روز کاری)">
+      <label>تخفیف روز (درصد، اختیاری)</label>
+      <input id="pDisc" inputmode="numeric" placeholder="مثلاً ۱۰ (خالی = بدون تخفیف)">
       <label>سردسته</label>
       <select id="pMain" class="cat-select"></select>
       <label>زیردسته</label>
@@ -1613,6 +1615,21 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       <div class="hint">لیست رو دانلود کن، توی اکسل فقط ستون‌های قیمت و موجودی رو عوض کن، با فرمت CSV UTF-8 ذخیره کن و دوباره بارگذاری کن. ستون کد و نام رو دست نزن.</div>
       <div class="sheet-actions"><button class="btn-secondary" id="csvOut" style="flex:none; width:100%;">دانلود لیست</button></div>
       <label class="file-btn">بارگذاری لیست ویرایش‌شده<input type="file" id="csvIn" accept=".csv,text/csv,text/plain"></label>
+        </div>
+      </details>
+      <details class="tl-sec" id="tlPub">
+        <summary>انتشار تغییرات برای همه‌ی مشتری‌ها</summary>
+        <div class="tl-body">
+          <div class="hint">هر چیزی که توی پنل عوض می‌کنی (قیمت، موجودی، زمان آماده‌سازی، تخفیف روز، پیشنهاد شگفت‌انگیز) فقط روی همین گوشی دیده می‌شه. برای اینکه مشتری‌ها هم ببینن: «ساخت فایل محصولات» رو بزن، فایل <b dir="ltr">products.js</b> دانلود می‌شه. اون رو توی گیت‌هاب جایگزین فایل قبلی کن (Add file ← Upload files ← Commit changes).</div>
+          <div class="hint" id="pubInfo"></div>
+          <div class="sheet-actions"><button class="btn-primary" id="pubBuild" style="flex:none; width:100%;">ساخت فایل محصولات (products.js)</button></div>
+          <div class="sheet-actions"><button class="btn-secondary" id="pubCopy" style="flex:none; width:100%;">کپی متن فایل (اگه دانلود کار نکرد)</button></div>
+      <div class="hint" style="margin-top:14px;"><b>انتشار مستقیم (بدون دانلود و آپلود):</b> یک بار نام مخزن و کلید گیت‌هاب رو وارد کن. بعد از اون با یک دکمه، محصولات روی سایت منتشر می‌شن و بعد از حدود یک دقیقه مشتری‌ها می‌بینن. کلید فقط روی همین گوشی ذخیره می‌شه و باید پیش خودت بمونه؛ هیچ‌وقت اون رو برای کسی نفرست.</div>
+      <label>مخزن گیت‌هاب</label>
+      <input id="ghRepo" dir="ltr" autocomplete="off" placeholder="mosalass/Salamati">
+      <label>کلید گیت‌هاب (Token)</label>
+      <input id="ghToken" type="password" dir="ltr" autocomplete="off" placeholder="github_pat_...">
+      <div class="sheet-actions"><button class="btn-primary" id="ghPublish" style="flex:none; width:100%;">انتشار مستقیم روی سایت</button></div>
         </div>
       </details>
       <details class="tl-sec" id="tlBig">
@@ -2731,7 +2748,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   document.getElementById('adminCancel').addEventListener('click', closeLogin);
   adminPass.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
   var adminOverlay = document.getElementById('adminOverlay');
-  var APP_BUILD = '2026-10-18-C';
+  var APP_BUILD = '2026-10-18-E';
   function openAdmin(){
     document.getElementById('buildInfo').textContent = 'index: ' + APP_BUILD + '  |  products: ' + (window.STORE_BUILD || 'OLD');
     renderAdminList();
@@ -2912,6 +2929,97 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   });
   document.getElementById('bkRestore').addEventListener('click', function(){ restoreBackup(document.getElementById('bkText').value); });
 
+  // ---- Publish: build a products.js from the panel data so every customer sees it ----
+  function pubJs(){
+    var skipped = 0, flashN = 0, discN = 0;
+    var list = products.map(function(p){
+      var o = { id:p.id, name:p.name, price:Number(p.price) || 0, stock:Number(p.stock) || 0, prep:prepDays(p), main:p.main, sub:p.sub, img:p.img || '', desc:p.desc || '', about:p.about || '', features:p.features || [], expiry:p.expiry || '' };
+      if (p.brand) o.brand = p.brand;
+      if (Number(p.disc) > 0){ o.disc = Number(p.disc); discN++; }
+      var sh = p.ship || {};
+      if (Number(sh.courier) !== 30000 || Number(sh.post) !== 45000 || Number(sh.pickup) !== 0) o.ship = { courier:Number(sh.courier) || 0, post:Number(sh.post) || 0, pickup:Number(sh.pickup) || 0 };
+      if (String(o.img).indexOf('data:') === 0){ o.img = ''; skipped++; }
+      if (p.flash && Number(p.flash.pct) > 0){
+        var hrs = p.flash.cyc ? p.flash.cyc / 3600000 : (Number(p.flash.end) - Date.now()) / 3600000;
+        hrs = Math.round(hrs * 10) / 10;
+        if (hrs > 0){ o.flash = { pct:Number(p.flash.pct), hours:hrs }; flashN++; }
+      }
+      return o;
+    });
+    var ver = Math.max(Number(CATALOG && CATALOG.version) || 1, ghPubVer()) + 1;
+    var t = new Date(), pd = function(n){ return (n < 10 ? '0' : '') + n; };
+    var build = 'P-' + t.getFullYear() + pd(t.getMonth() + 1) + pd(t.getDate()) + '-' + pd(t.getHours()) + pd(t.getMinutes());
+    function g(k){ var v = window[k]; return JSON.stringify(v === undefined ? null : v); }
+    var txt = '/* Real product catalog (made from the admin panel). Raise "version" every time you change this list so customers get the update. */\n' +
+      'window.STORE_BUILD = ' + JSON.stringify(build) + ';\n' +
+      'window.STORE_CATALOG = ' + JSON.stringify({ version:ver, built:Date.now(), products:list }, null, 1) + ';\n\n' +
+      '/* Announcement bar: { id, text, link, until }. null = off. */\nwindow.STORE_ANNOUNCEMENT = ' + g('STORE_ANNOUNCEMENT') + ';\n\n' +
+      '/* Small banners 1-4. null = built-in. */\nwindow.STORE_BANNERS = ' + g('STORE_BANNERS') + ';\n\n' +
+      '/* Big banners 1 and 2. */\nwindow.STORE_HERO_BANNERS = ' + g('STORE_HERO_BANNERS') + ';\n\n' +
+      '/* Health articles. */\nwindow.STORE_ARTICLES = ' + JSON.stringify(window.STORE_ARTICLES === undefined ? [] : window.STORE_ARTICLES, null, 1) + ';\n';
+    return { text:txt, count:list.length, skipped:skipped, flash:flashN, disc:discN, build:build };
+  }
+  function pubSummary(r){
+    return fmt(r.count) + ' محصول، ' + fmt(r.disc) + ' تخفیف روز، ' + fmt(r.flash) + ' پیشنهاد شگفت‌انگیز' + (r.skipped ? ' — ' + fmt(r.skipped) + ' محصول که عکسش فقط روی این گوشی بود بدون عکس ساخته شد' : '');
+  }
+  var LS_GH = 'st_gh_v1', LS_PUBVER = 'st_pubver_v1';
+  function ghPubVer(){ try { return Number(localStorage.getItem(LS_PUBVER)) || 0; } catch(e){ return 0; } }
+  function ghCfg(){ try { return JSON.parse(localStorage.getItem(LS_GH)) || {}; } catch(e){ return {}; } }
+  (function(){ var c = ghCfg(); document.getElementById('ghRepo').value = c.repo || 'mosalass/Salamati'; document.getElementById('ghToken').value = c.token || ''; })();
+  function ghB64(s){ return btoa(unescape(encodeURIComponent(s))); }
+  function ghErr(e){
+    var s = e && e.status;
+    if (s === 401) return 'کلید گیت‌هاب اشتباه است یا منقضی شده. یک کلید جدید بساز.';
+    if (s === 403) return 'این کلید اجازه‌ی نوشتن ندارد. موقع ساخت کلید، گزینه‌ی Contents را روی Read and write بگذار.';
+    if (s === 404) return 'مخزن یا فایل پیدا نشد. نام مخزن را بررسی کن و مطمئن شو کلید به همین مخزن دسترسی دارد.';
+    if (s === 409 || s === 422) return 'هم‌زمان تغییری روی گیت‌هاب ثبت شده بود. یک بار دیگر دکمه را بزن.';
+    if (e && e.stale) return e.stale;
+    return 'اتصال به گیت‌هاب برقرار نشد. اینترنت را بررسی کن یا از دکمه‌ی «ساخت فایل محصولات» استفاده کن.';
+  }
+  function ghChk(res){ if (!res.ok){ var er = new Error('http'); er.status = res.status; throw er; } return res.json(); }
+  document.getElementById('ghPublish').addEventListener('click', function(){
+    var btn = this, info = document.getElementById('pubInfo');
+    var c = { repo:document.getElementById('ghRepo').value.trim(), token:document.getElementById('ghToken').value.trim() };
+    if (!/^[\w.\-]+\/[\w.\-]+$/.test(c.repo)){ toast('نام مخزن را مثل mosalass/Salamati بنویس'); return; }
+    if (!c.token){ toast('کلید گیت‌هاب را وارد کن'); return; }
+    try { localStorage.setItem(LS_GH, JSON.stringify(c)); } catch(e){}
+    var r = pubJs();
+    if (!r.count){ toast('محصولی برای انتشار وجود ندارد'); return; }
+    if (r.skipped && !confirm(fmt(r.skipped) + ' محصول عکسش فقط روی این گوشی است و بدون عکس منتشر می‌شود. ادامه بدهم؟')) return;
+    var H = { 'Authorization':'Bearer ' + c.token, 'Accept':'application/vnd.github+json' };
+    var api = 'https://api.github.com/repos/' + c.repo, branch = '';
+    btn.disabled = true; info.textContent = 'در حال ارسال به گیت‌هاب...';
+    fetch(api, { headers:H }).then(ghChk).then(function(repo){
+      branch = repo.default_branch || 'main';
+      return fetch(api + '/contents/products.js?ref=' + encodeURIComponent(branch), { headers:H });
+    }).then(ghChk).then(function(file){
+      var known = Math.max(Number(CATALOG && CATALOG.version) || 1, ghPubVer());
+      var m = /"version":\s*(\d+)/.exec(atob(String(file.content || '').replace(/\s/g, '')));
+      if (m && Number(m[1]) > known){ var er = new Error('stale'); er.stale = 'فایل روی گیت‌هاب جدیدتر از نسخه‌ی پنل توست. صفحه را کامل ببند و دوباره باز کن، بعد دوباره منتشر کن.'; throw er; }
+      var body = { message:'Update products from admin panel (' + r.build + ')', content:ghB64(r.text), sha:file.sha, branch:branch };
+      return fetch(api + '/contents/products.js', { method:'PUT', headers:{ 'Authorization':H.Authorization, 'Accept':H.Accept, 'Content-Type':'application/json' }, body:JSON.stringify(body) });
+    }).then(ghChk).then(function(){
+      var v = /"version":\s*(\d+)/.exec(r.text);
+      try { if (v) localStorage.setItem(LS_PUBVER, v[1]); } catch(e){}
+      info.textContent = 'منتشر شد: ' + pubSummary(r) + '. بعد از حدود یک دقیقه مشتری‌ها می‌بینن.';
+      toast('منتشر شد');
+    }).catch(function(e){
+      info.textContent = ghErr(e);
+    }).then(function(){ btn.disabled = false; });
+  });
+  document.getElementById('pubBuild').addEventListener('click', function(){
+    var r = pubJs();
+    dlFile('products.js', r.text, 'text/javascript;charset=utf-8');
+    document.getElementById('pubInfo').textContent = 'فایل ساخته شد: ' + pubSummary(r);
+    toast('فایل products.js ساخته شد');
+  });
+  document.getElementById('pubCopy').addEventListener('click', function(){
+    var r = pubJs();
+    try { navigator.clipboard.writeText(r.text).then(function(){ toast('متن فایل کپی شد'); }, function(){ toast('کپی نشد'); }); }
+    catch(e){ toast('کپی نشد'); }
+    document.getElementById('pubInfo').textContent = pubSummary(r);
+  });
+
   // ---- Banner settings in the admin panel ----
   var bnDraft = null;
   var BN_POS = [['بنر ۱', 'بالا، سمت راست'], ['بنر ۲', 'بالا، سمت چپ'], ['بنر ۳', 'پایین، سمت راست'], ['بنر ۴', 'پایین، سمت چپ']];
@@ -3062,6 +3170,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       document.getElementById('pAbout').value = p.about || '';
       document.getElementById('pExpiry').value = p.expiry || '';
       document.getElementById('pPrep').value = p.prep || '';
+      document.getElementById('pDisc').value = p.disc || '';
       setCatSel(p.main, p.sub);
       document.getElementById('pBrand').value = p.brand || '';
       editFlashOrig = null;
@@ -3097,7 +3206,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     editingId = null; pickedImg = ''; editFlashOrig = null;
     document.getElementById('pImgPreview').innerHTML = PH_IMG;
     document.getElementById('pImgInput').value = '';
-    ['pName','pPrice','pStock','pDesc','pFeatures','pAbout','pExpiry','pPrep','pShipCourier','pShipPost','pShipPickup','pBrand','pFlashPct','pFlashH','pFlashM','pFlashS'].forEach(function(id){
+    ['pName','pPrice','pStock','pDesc','pFeatures','pAbout','pExpiry','pPrep','pDisc','pShipCourier','pShipPost','pShipPickup','pBrand','pFlashPct','pFlashH','pFlashM','pFlashS'].forEach(function(id){
       document.getElementById(id).value = '';
     });
     setCatSel(CATS[0].n, CATS[0].subs[0]);
@@ -3119,6 +3228,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       pickup: parseInt(document.getElementById('pShipPickup').value, 10) || 0
     };
     if (!name || !price){ toast('نام و قیمت محصول رو وارد کن'); return; }
+    var disc = Math.max(0, Math.min(90, parseInt(faToEn(document.getElementById('pDisc').value), 10) || 0));
     var prep = parseInt(faToEn(document.getElementById('pPrep').value), 10);
     if (!prep || prep < 1 || prep > 30){ toast('زمان آماده‌سازی رو به روز کاری وارد کن (عدد ۱ تا ۳۰)'); document.getElementById('pPrep').focus(); return; }
     var fPct = document.getElementById('pFlashPct').value.trim(), fH = document.getElementById('pFlashH').value.trim(),
@@ -3135,13 +3245,13 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     if (editingId){
       products = products.map(function(p){
         if (p.id !== editingId) return p;
-        return Object.assign({}, p, { id:p.id, name:name, price:price, desc:desc, stock:stock, category:sub, main:main, sub:sub, ship:ship, features:features, about:about, expiry:document.getElementById('pExpiry').value.trim(), prep:prep, date:p.date, added:p.added, upd:((price !== Number(p.price) || stock !== Number(p.stock)) ? Date.now() : p.upd), img:pickedImg, brand:document.getElementById('pBrand').value, flash:flash });
+        return Object.assign({}, p, { id:p.id, name:name, price:price, desc:desc, stock:stock, category:sub, main:main, sub:sub, ship:ship, features:features, about:about, expiry:document.getElementById('pExpiry').value.trim(), prep:prep, disc:disc, date:p.date, added:p.added, upd:((price !== Number(p.price) || stock !== Number(p.stock)) ? Date.now() : p.upd), img:pickedImg, brand:document.getElementById('pBrand').value, flash:flash });
       });
       toast('تغییرات ذخیره شد');
     } else {
       products.push({
         id: 'p_' + Date.now(), name:name, price:price, desc:desc, stock:stock, category:sub, main:main, sub:sub,
-        ship:ship, features:features, about:about, expiry:document.getElementById('pExpiry').value.trim(), prep:prep, date:new Date().toISOString().slice(0,10), added:Date.now(), img:pickedImg, brand:document.getElementById('pBrand').value, flash:flash
+        ship:ship, features:features, about:about, expiry:document.getElementById('pExpiry').value.trim(), prep:prep, disc:disc, date:new Date().toISOString().slice(0,10), added:Date.now(), img:pickedImg, brand:document.getElementById('pBrand').value, flash:flash
       });
       toast('محصول اضافه شد');
     }
