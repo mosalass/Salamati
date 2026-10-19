@@ -1627,7 +1627,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
           <div class="hint" id="pubInfo"></div>
           <div class="sheet-actions"><button class="btn-primary" id="pubBuild" style="flex:none; width:100%;">ساخت فایل محصولات (products.js)</button></div>
           <div class="sheet-actions"><button class="btn-secondary" id="pubCopy" style="flex:none; width:100%;">کپی متن فایل (اگه دانلود کار نکرد)</button></div>
-      <div class="hint" style="margin-top:14px;"><b>انتشار مستقیم (بدون دانلود و آپلود):</b> یک بار نام مخزن و کلید گیت‌هاب رو وارد کن. بعد از اون با یک دکمه، محصولات روی سایت منتشر می‌شن و بعد از حدود یک دقیقه مشتری‌ها می‌بینن. کلید فقط روی همین گوشی ذخیره می‌شه و باید پیش خودت بمونه؛ هیچ‌وقت اون رو برای کسی نفرست.</div>
+      <div class="hint" style="margin-top:14px;"><b>انتشار مستقیم (بدون دانلود و آپلود):</b> یک بار نام مخزن و کلید گیت‌هاب رو وارد کن. بعد از اون با یک دکمه، محصولات روی سایت منتشر می‌شن و بعد از حدود یک دقیقه مشتری‌ها می‌بینن. لوگوهایی که برای برندها انتخاب کردی هم همراهش منتشر می‌شن. کلید فقط روی همین گوشی ذخیره می‌شه و باید پیش خودت بمونه؛ هیچ‌وقت اون رو برای کسی نفرست.</div>
       <label>مخزن گیت‌هاب</label>
       <input id="ghRepo" dir="ltr" autocomplete="off" placeholder="mosalass/Salamati">
       <label>کلید گیت‌هاب (Token)</label>
@@ -2751,7 +2751,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   document.getElementById('adminCancel').addEventListener('click', closeLogin);
   adminPass.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
   var adminOverlay = document.getElementById('adminOverlay');
-  var APP_BUILD = '2026-10-19-G';
+  var APP_BUILD = '2026-10-19-J';
   function openAdmin(){
     document.getElementById('buildInfo').textContent = 'index: ' + APP_BUILD + '  |  products: ' + (window.STORE_BUILD || 'OLD');
     renderAdminList();
@@ -2933,7 +2933,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   document.getElementById('bkRestore').addEventListener('click', function(){ restoreBackup(document.getElementById('bkText').value); });
 
   // ---- Publish: build a products.js from the panel data so every customer sees it ----
-  function pubJs(){
+  function pubJs(logoMap){
     var skipped = 0, flashN = 0, discN = 0;
     var list = products.map(function(p){
       var o = { id:p.id, name:p.name, price:Number(p.price) || 0, stock:Number(p.stock) || 0, prep:prepDays(p), main:p.main, sub:p.sub, img:p.img || '', desc:p.desc || '', about:p.about || '', features:p.features || [], expiry:p.expiry || '' };
@@ -2959,7 +2959,8 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       '/* Announcement bar: { id, text, link, until }. null = off. */\nwindow.STORE_ANNOUNCEMENT = ' + g('STORE_ANNOUNCEMENT') + ';\n\n' +
       '/* Small banners 1-4. null = built-in. */\nwindow.STORE_BANNERS = ' + g('STORE_BANNERS') + ';\n\n' +
       '/* Big banners 1 and 2. */\nwindow.STORE_HERO_BANNERS = ' + g('STORE_HERO_BANNERS') + ';\n\n' +
-      '/* Health articles. */\nwindow.STORE_ARTICLES = ' + JSON.stringify(window.STORE_ARTICLES === undefined ? [] : window.STORE_ARTICLES, null, 1) + ';\n';
+      '/* Health articles. */\nwindow.STORE_ARTICLES = ' + JSON.stringify(window.STORE_ARTICLES === undefined ? [] : window.STORE_ARTICLES, null, 1) + ';\n\n' +
+      '/* Brand logos: brand name to image file. */\nwindow.STORE_BRAND_LOGOS = ' + JSON.stringify(logoMap || window.STORE_BRAND_LOGOS || {}, null, 1) + ';\n';
     return { text:txt, count:list.length, skipped:skipped, flash:flashN, disc:discN, build:build };
   }
   function pubSummary(r){
@@ -2986,7 +2987,15 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     if (!/^[\w.\-]+\/[\w.\-]+$/.test(c.repo)){ toast('نام مخزن را مثل mosalass/Salamati بنویس'); return; }
     if (!c.token){ toast('کلید گیت‌هاب را وارد کن'); return; }
     try { localStorage.setItem(LS_GH, JSON.stringify(c)); } catch(e){}
-    var r = pubJs();
+    var logoMap = Object.assign({}, window.STORE_BRAND_LOGOS || {}), logoFiles = [];
+    BRANDS.forEach(function(b){
+      var d = settings.brandLogos && settings.brandLogos[b.n];
+      if (!d || String(d).indexOf('data:image/png;base64,') !== 0) return;
+      var hs = 5381; for (var q = 0; q < d.length; q++) hs = ((hs * 33) ^ d.charCodeAt(q)) >>> 0;
+      var fn = 'bl-' + hs.toString(16) + '.png';
+      logoMap[b.n] = fn; logoFiles.push({ path:fn, b64:String(d).split(',')[1] });
+    });
+    var r = pubJs(logoMap);
     if (!r.count){ toast('محصولی برای انتشار وجود ندارد'); return; }
     if (r.skipped && !confirm(fmt(r.skipped) + ' محصول عکسش فقط روی این گوشی است و بدون عکس منتشر می‌شود. ادامه بدهم؟')) return;
     var H = { 'Authorization':'Bearer ' + c.token, 'Accept':'application/vnd.github+json' };
@@ -2999,8 +3008,21 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
       var known = Math.max(Number(CATALOG && CATALOG.version) || 1, ghPubVer());
       var m = /"version":\s*(\d+)/.exec(atob(String(file.content || '').replace(/\s/g, '')));
       if (m && Number(m[1]) > known){ var er = new Error('stale'); er.stale = 'فایل روی گیت‌هاب جدیدتر از نسخه‌ی پنل توست. صفحه را کامل ببند و دوباره باز کن، بعد دوباره منتشر کن.'; throw er; }
-      var body = { message:'Update products from admin panel (' + r.build + ')', content:ghB64(r.text), sha:file.sha, branch:branch };
-      return fetch(api + '/contents/products.js', { method:'PUT', headers:{ 'Authorization':H.Authorization, 'Accept':H.Accept, 'Content-Type':'application/json' }, body:JSON.stringify(body) });
+      var PH = { 'Authorization':H.Authorization, 'Accept':H.Accept, 'Content-Type':'application/json' };
+      var chain = Promise.resolve();
+      logoFiles.forEach(function(f){
+        chain = chain.then(function(){
+          info.textContent = 'در حال ارسال لوگوها...';
+          return fetch(api + '/contents/' + f.path, { method:'PUT', headers:PH, body:JSON.stringify({ message:'Add brand logo ' + f.path, content:f.b64, branch:branch }) }).then(function(res){
+            if (!res.ok && res.status !== 422){ var er = new Error('http'); er.status = res.status; throw er; }
+          });
+        });
+      });
+      return chain.then(function(){
+        info.textContent = 'در حال ارسال محصولات...';
+        var body = { message:'Update products from admin panel (' + r.build + ')', content:ghB64(r.text), sha:file.sha, branch:branch };
+        return fetch(api + '/contents/products.js', { method:'PUT', headers:PH, body:JSON.stringify(body) });
+      });
     }).then(ghChk).then(function(){
       var v = /"version":\s*(\d+)/.exec(r.text);
       try { if (v) localStorage.setItem(LS_PUBVER, v[1]); } catch(e){}
@@ -3751,16 +3773,39 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     {n:'لافارر',   m:'ل', b1:'#C58BFF', b2:'#7A2EC7'},
     {n:'مای',      m:'م', b1:'#FF9CC8', b2:'#D6336C'},
     {n:'کاله',     m:'ک', b1:'#FFD84D', b2:'#F08C00'},
-    {n:'ویتالایر', m:'و', b1:'#4FE3D2', b2:'#0A8FB0'}
+    {n:'ویتالایر', m:'و', b1:'#4FE3D2', b2:'#0A8FB0'},
+    {n:'ژنوبایوتیک', m:'ژ', b1:'#7BD88F', b2:'#1E8A4C'},
+    {n:'دیپ سنس', m:'د', b1:'#6FD3FF', b2:'#1D7FD1'},
+    {n:'رین ویت', m:'ر', b1:'#FFB26B', b2:'#E8590C'},
+    {n:'ویتاویوا', m:'و', b1:'#B58CFF', b2:'#6A3FD1'},
+    {n:'ویتامکس', m:'و', b1:'#FF9BB5', b2:'#D6336C'},
+    {n:'دکتر ژیلا', m:'ژ', b1:'#F59AE0', b2:'#B0308E'},
+    {n:'آر یو اوکی', m:'آ', b1:'#6BB6FF', b2:'#2B59C3'},
+    {n:'میسویک', m:'م', b1:'#6BE3A6', b2:'#12875A'},
+    {n:'ترمینکس', m:'ت', b1:'#FF8A7A', b2:'#C92A2A'},
+    {n:'جی', m:'ج', b1:'#FFC76B', b2:'#D9730D'}
   ];
+  // a product without a brand gets one when the brand name appears as whole words in its name
+  function inferBrands(){
+    var order = BRANDS.map(function(b){ return b.n; }).sort(function(a, b){ return b.length - a.length; });
+    var known = {}; BRANDS.forEach(function(b){ known[b.n] = 1; });
+    products.forEach(function(p){
+      if (p.brand && !known[p.brand]) p.brand = '';
+      if (p.brand) return;
+      var nm = ' ' + String(p.name || '').replace(/[\u200c،,.()\-]/g, ' ').replace(/\s+/g, ' ') + ' ';
+      for (var i = 0; i < order.length; i++){ if (nm.indexOf(' ' + order[i] + ' ') !== -1){ p.brand = order[i]; break; } }
+    });
+  }
+  inferBrands();
   var brandGrid = document.getElementById('brandGrid'), brandAdmin = document.getElementById('brandAdmin');
-  function brandLogo(i){ return (settings.brandLogos && settings.brandLogos[BRANDS[i].n]) || ''; }
+  function brandLogo(i){ var n = BRANDS[i].n; return (settings.brandLogos && settings.brandLogos[n]) || (window.STORE_BRAND_LOGOS && window.STORE_BRAND_LOGOS[n]) || ''; }
   function emblemHtml(i){
     var b = BRANDS[i], logo = brandLogo(i);
     return logo ? '<div class="br-emblem logo"><img src="' + logo + '" alt=""></div>' : '<div class="br-emblem"><b>' + b.m + '</b></div>';
   }
   function renderBrands(){
     brandGrid.innerHTML = BRANDS.map(function(b, i){
+      if (!products.some(function(p){ return p.brand === b.n; })) return '';
       return '<a class="br-tile" href="#/brand/' + i + '" style="--b1:' + b.b1 + ';--b2:' + b.b2 + '">' + emblemHtml(i) + '<div class="br-name">' + b.n + '</div></a>';
     }).join('');
   }
@@ -4224,7 +4269,8 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     if (route === 'bestsellers') renderBest();
     if (route === 'articles') renderArticles();
     if (route === 'article') renderArticle(articleId);
-    if (route === 'home'){ renderArtHome(); renderHomeBanners(); }
+    if (route === 'home'){ renderArtHome(); renderHomeBanners(); renderBrands(); }
+    if (route === 'brands') renderBrands();
     if (route === 'product' && productId) renderProductDetail(productId);
     if (route === 'category') renderCategory(catM, catS);
     if (route === 'search'){
