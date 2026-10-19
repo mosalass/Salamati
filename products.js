@@ -1,8 +1,8 @@
 /* Real product catalog (made from the admin panel). Raise "version" every time you change this list so customers get the update. */
-window.STORE_BUILD = "P-20261019-1125";
+window.STORE_BUILD = "P-20261019-1142";
 window.STORE_CATALOG = {
- "version": 8,
- "built": 1792396534838,
+ "version": 9,
+ "built": 1792397569394,
  "products": [
   {
    "id": "r1",
@@ -152,7 +152,8 @@ window.STORE_CATALOG = {
     "بسته‌ی ۶۰ عددی",
     "مکمل غذایی"
    ],
-   "expiry": ""
+   "expiry": "",
+   "disc": 30
   },
   {
    "id": "r8",
