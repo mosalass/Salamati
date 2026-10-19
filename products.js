@@ -1,8 +1,8 @@
 /* Real product catalog (made from the admin panel). Raise "version" every time you change this list so customers get the update. */
-window.STORE_BUILD = "P-20261019-0112";
+window.STORE_BUILD = "P-20261019-1125";
 window.STORE_CATALOG = {
- "version": 7,
- "built": 1792359743261,
+ "version": 8,
+ "built": 1792396534838,
  "products": [
   {
    "id": "r1",
@@ -88,7 +88,17 @@ window.STORE_CATALOG = {
     "حمایت تغذیه‌ای روزانه",
     "دارای ویتامین‌های B12، B7، A، D، E، B1، B2، B3، B5، B6 و C"
    ],
-   "expiry": ""
+   "expiry": "",
+   "disc": 3,
+   "ship": {
+    "courier": 90000,
+    "post": 165000,
+    "pickup": 0
+   },
+   "flash": {
+    "pct": 3,
+    "hours": 23.8
+   }
   },
   {
    "id": "r5",
