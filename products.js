@@ -1,8 +1,8 @@
 /* Real product catalog (made from the admin panel). Raise "version" every time you change this list so customers get the update. */
-window.STORE_BUILD = "P-20261019-1142";
+window.STORE_BUILD = "P-20261019-1552";
 window.STORE_CATALOG = {
- "version": 9,
- "built": 1792397569394,
+ "version": 10,
+ "built": 1792412556166,
  "products": [
   {
    "id": "r1",
@@ -49,7 +49,8 @@ window.STORE_CATALOG = {
     "برای نواحی خشک مثل زانو و آرنج",
     "همراه با جعبه‌ی اصلی"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "جی"
   },
   {
    "id": "r3",
@@ -68,7 +69,8 @@ window.STORE_CATALOG = {
     "طبق بسته‌بندی، مناسب دندان‌های حساس",
     "همراه با جعبه"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "میسویک"
   },
   {
    "id": "r4",
@@ -89,6 +91,7 @@ window.STORE_CATALOG = {
     "دارای ویتامین‌های B12، B7، A، D، E، B1، B2، B3، B5، B6 و C"
    ],
    "expiry": "",
+   "brand": "رین ویت",
    "disc": 3,
    "ship": {
     "courier": 90000,
@@ -116,7 +119,8 @@ window.STORE_CATALOG = {
     "ژل شستشوی صورت",
     "همراه با پمپ"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "آر یو اوکی"
   },
   {
    "id": "r6",
@@ -134,7 +138,8 @@ window.STORE_CATALOG = {
     "سافت‌ژل",
     "مکمل غذایی"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "ویتاویوا"
   },
   {
    "id": "r7",
@@ -153,6 +158,7 @@ window.STORE_CATALOG = {
     "مکمل غذایی"
    ],
    "expiry": "",
+   "brand": "ویتامکس",
    "disc": 30
   },
   {
@@ -224,7 +230,8 @@ window.STORE_CATALOG = {
     "مناسب پوست خشک و خیلی خشک",
     "پاک‌کننده‌ی آرایش"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "دیپ سنس"
   },
   {
    "id": "r12",
@@ -241,7 +248,8 @@ window.STORE_CATALOG = {
     "اسکراب پاک‌کننده",
     "بسته‌بندی تیوپ"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "دکتر ژیلا"
   },
   {
    "id": "r13",
@@ -258,7 +266,8 @@ window.STORE_CATALOG = {
     "تونر صورت",
     "تمیزکننده و روشن‌کننده"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "ژنوبایوتیک"
   },
   {
    "id": "r14",
@@ -275,7 +284,8 @@ window.STORE_CATALOG = {
     "تونر صورت",
     "تمیزکننده"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "ژنوبایوتیک"
   },
   {
    "id": "r15",
@@ -292,7 +302,8 @@ window.STORE_CATALOG = {
     "تونر صورت",
     "تنظیم‌کننده‌ی چربی و براقیت"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "ژنوبایوتیک"
   },
   {
    "id": "r16",
@@ -309,7 +320,8 @@ window.STORE_CATALOG = {
     "مناسب انواع پوست",
     "میسلار واتر"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "دیپ سنس"
   },
   {
    "id": "r17",
@@ -326,7 +338,8 @@ window.STORE_CATALOG = {
     "چسب مگس",
     "دور از دسترس کودکان"
    ],
-   "expiry": ""
+   "expiry": "",
+   "brand": "ترمینکس"
   },
   {
    "id": "r18",
@@ -502,3 +515,9 @@ window.STORE_ARTICLES = [
   ]
  }
 ];
+
+/* Brand logos: brand name to image file. */
+window.STORE_BRAND_LOGOS = {
+ "یورویتال": "bl-74e0da3e.png",
+ "دیپ سنس": "bl-dd2832ac.png"
+};
