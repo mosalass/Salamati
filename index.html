@@ -769,6 +769,8 @@
   .bn-txt b { display:block; font-size:16.5px; font-weight:800; line-height:1.55; text-shadow:0 2px 8px rgba(0,0,0,.18); }
   .bn-txt .bn-sub { display:block; font-size:11.5px; opacity:.95; margin:2px 0 10px; }
   .bn-btn { display:inline-block; padding:7px 22px; border-radius:999px; background:#fff; font-size:12.5px; font-weight:800; }
+/* iPhone zooms the page when a field with text smaller than 16px gets focus, which shifts taps onto other fields */
+input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]), select, textarea, .cat-select { font-size:16px !important; }
 .bn-btn-img { position:absolute; left:14px; bottom:12px; z-index:2; color:#0f3d1e; box-shadow:0 6px 16px rgba(0,0,0,.35); }
   .bn-0 .bn-btn { color:#B83280; }
   .bn-1 .bn-btn { color:#0B6A62; }
@@ -2749,7 +2751,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   document.getElementById('adminCancel').addEventListener('click', closeLogin);
   adminPass.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
   var adminOverlay = document.getElementById('adminOverlay');
-  var APP_BUILD = '2026-10-19-F';
+  var APP_BUILD = '2026-10-19-G';
   function openAdmin(){
     document.getElementById('buildInfo').textContent = 'index: ' + APP_BUILD + '  |  products: ' + (window.STORE_BUILD || 'OLD');
     renderAdminList();
