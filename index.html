@@ -785,8 +785,10 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),
 .ab-tx small { font-size:10px; opacity:.75; font-weight:500; }
 .ab-tx b { font-size:14px; font-weight:800; }
 .ab.soon { opacity:.55; pointer-events:none; }
-.ap-social { display:flex; justify-content:center; gap:12px; margin:16px 0 14px; }
-.ap-social a { width:44px; height:44px; border-radius:50%; background:#fff; border:1px solid #e3e8e4; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.ap-social { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:16px 0 14px; }
+.ap-social a, .ap-social .ap-soc { width:44px; height:44px; border-radius:50%; background:#fff; border:1px solid #e3e8e4; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.ap-social .ap-soc { cursor:default; }
+.ap-txt { font-size:11px; font-weight:800; }
 .ap-social svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
 .app-promo p.ap-text { margin:0 auto; max-width:420px; font-size:13px; line-height:2; color:#4b5a50; }
 .bn-btn-img { position:absolute; left:14px; bottom:12px; z-index:2; color:#0f3d1e; box-shadow:0 6px 16px rgba(0,0,0,.35); }
@@ -1655,6 +1657,9 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
         <label>اپ استور</label><input id="lkAppstore" dir="ltr" autocomplete="off" placeholder="https://apps.apple.com/app/...">
         <label>تلگرام</label><input id="lkTelegram" dir="ltr" autocomplete="off" placeholder="نام کاربری یا لینک">
         <label>اینستاگرام</label><input id="lkInstagram" dir="ltr" autocomplete="off" placeholder="نام کاربری یا لینک">
+        <label>ایتا</label><input id="lkEitaa" dir="ltr" autocomplete="off" placeholder="نام کاربری یا لینک">
+        <label>بله</label><input id="lkBale" dir="ltr" autocomplete="off" placeholder="نام کاربری یا لینک">
+        <label>روبیکا</label><input id="lkRubika" dir="ltr" autocomplete="off" placeholder="نام کاربری یا لینک">
         <div class="sheet-actions"><button class="btn-primary" id="lkSave" style="flex:none; width:100%;">ذخیره‌ی لینک‌ها</button></div>
       </div>
     </details>
@@ -2789,7 +2794,7 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
   document.getElementById('adminCancel').addEventListener('click', closeLogin);
   adminPass.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
   var adminOverlay = document.getElementById('adminOverlay');
-  var APP_BUILD = '2026-10-20-K';
+  var APP_BUILD = '2026-10-20-N';
   function openAdmin(){
     document.getElementById('buildInfo').textContent = 'index: ' + APP_BUILD + '  |  products: ' + (window.STORE_BUILD || 'OLD');
     renderAdminList();
@@ -3016,6 +3021,12 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     if (base) return base + v.replace(/^@/, '').replace(/^\/+/, '');
     return '';
   }
+  // iPhone and GitHub may add their own extension (.PNG or .png.PNG), so try each common spelling before falling back to the plain badge
+  window.abNext = function(img){
+    var ex = ['png', 'PNG', 'png.PNG', 'png.png', 'jpg', 'JPG', 'jpeg', 'webp'], i = Number(img.getAttribute('data-i')) + 1;
+    if (i < ex.length){ img.setAttribute('data-i', i); img.src = 'badge-' + img.getAttribute('data-k') + '.' + ex[i]; }
+    else { img.parentNode.classList.add('noimg'); img.remove(); }
+  };
   function renderAppPromo(){
     var L = appLinks();
     var stores = [
@@ -3026,22 +3037,30 @@ body.searching .cart-sticky, body.searching .bnav, body.searching .toast { displ
     ];
     document.getElementById('apBadges').innerHTML = stores.map(function(s){
       var url = fullLink(L[s.k]);
-      var inner = '<img class="ab-img" src="badge-' + s.k + '.png" alt="' + s.fa + '" onerror="this.parentNode.classList.add(\'noimg\');this.remove()">' +
+      var inner = '<img class="ab-img" src="badge-' + s.k + '.png" data-k="' + s.k + '" data-i="0" alt="' + s.fa + '" onerror="abNext(this)">' +
         '<span class="ab-fb"><span class="ab-ic" style="background:' + s.col + '">' + s.ic + '</span><span class="ab-tx"><small>' + (url ? 'دریافت از' : 'به‌زودی در') + '</small><b>' + s.fa + '</b></span></span>';
       return url ? '<a class="ab" href="' + url + '" target="_blank" rel="noopener">' + inner + '</a>' : '<span class="ab soon">' + inner + '</span>';
     }).join('');
     var soc = [];
     var wa = String(settings.wa || '').replace(/\D/g, '');
     if (wa) soc.push({ u:'https://wa.me/' + wa, c:'#25D366', n:'واتساپ', svg:'<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/><path d="M9.3 8.8c.3 2.5 2.4 4.6 5 5l1-1.2-1.8-1-.7.6c-.9-.3-1.6-1-1.9-1.9l.6-.7-1-1.8z" fill="currentColor" stroke="none"/>' });
-    var tg = fullLink(L.telegram, 'https://t.me/'); if (tg) soc.push({ u:tg, c:'#229ED9', n:'تلگرام', svg:'<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>' });
-    var ig = fullLink(L.instagram, 'https://instagram.com/'); if (ig) soc.push({ u:ig, c:'#E1306C', n:'اینستاگرام', svg:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/>' });
+    var TGSVG = '<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>';
+    var IGSVG = '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/>';
+    // every icon is always shown; only icons with a real link (WhatsApp now) can be tapped
+    soc.push({ u:fullLink(L.telegram, 'https://t.me/'), c:'#229ED9', n:'تلگرام', svg:TGSVG });
+    soc.push({ u:fullLink(L.instagram, 'https://instagram.com/'), c:'#E1306C', n:'اینستاگرام', svg:IGSVG });
+    soc.push({ u:fullLink(L.eitaa, 'https://eitaa.com/'), c:'#F97316', n:'ایتا', txt:'ایتا' });
+    soc.push({ u:fullLink(L.bale, 'https://ble.ir/'), c:'#14B8A6', n:'بله', txt:'بله' });
+    soc.push({ u:fullLink(L.rubika, 'https://rubika.ir/'), c:'#8B5CF6', n:'روبیکا', txt:'روبیکا' });
     document.getElementById('apSocial').innerHTML = soc.map(function(s){
-      return '<a href="' + s.u + '" target="_blank" rel="noopener" aria-label="' + s.n + '" style="color:' + s.c + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + s.svg + '</svg></a>';
+      var g = s.svg ? '<svg viewBox="0 0 24 24" aria-hidden="true">' + s.svg + '</svg>' : '<b class="ap-txt">' + s.txt + '</b>';
+      return s.u ? '<a href="' + s.u + '" target="_blank" rel="noopener" aria-label="' + s.n + '" style="color:' + s.c + '">' + g + '</a>'
+                 : '<span class="ap-soc" aria-label="' + s.n + '" style="color:' + s.c + '">' + g + '</span>';
     }).join('');
   }
   renderAppPromo();
   (function(){
-    var m = { lkBazaar:'bazaar', lkMyket:'myket', lkPlay:'play', lkAppstore:'appstore', lkTelegram:'telegram', lkInstagram:'instagram' };
+    var m = { lkBazaar:'bazaar', lkMyket:'myket', lkPlay:'play', lkAppstore:'appstore', lkTelegram:'telegram', lkInstagram:'instagram', lkEitaa:'eitaa', lkBale:'bale', lkRubika:'rubika' };
     var cur = appLinks();
     Object.keys(m).forEach(function(id){ document.getElementById(id).value = cur[m[id]] || ''; });
     document.getElementById('lkSave').addEventListener('click', function(){
